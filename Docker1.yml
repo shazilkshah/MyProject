@@ -1,0 +1,28 @@
+---
+- name: Install docker
+  hosts: localhost
+  become: yes
+
+  tasks:
+    
+    - name: Install python setup tools
+      yum: name=python-setuptools
+    
+
+    - name: Install Pypi
+      easy_install: name=pip
+    
+    - name: Install docker-py
+      pip: name=docker-py
+    
+    - name: Install Docker
+      yum: name=docker state=latest
+    
+
+    - name: Make sure Docker is running
+      service: name=docker state=running
+    
+      
+    - name: Jenkins - install
+      shell: docker run -p 8081:8080 --name=myjenkins2 -v /home/jenkins_home jenkins
+              
